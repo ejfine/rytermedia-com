@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches-ignore:
+      - 'gh-readonly-queue/**' # don't run (again) when on these special branches created during merge groups; the `on: merge_group` already triggers it.
+  merge_group:
+
+env:
+  PYTHONUNBUFFERED: True
+  PRE_COMMIT_HOME: ${{ github.workspace }}/.precommit_cache
+
+permissions:
+    id-token: write
+    contents: write # needed for mutex
+
+jobs:
+  get-values:
+    uses: ./.github/workflows/get-values.yaml
+    permissions:
+      contents: write # needed updating dependabot branches
+
+  lint:
+    needs: [ get-values ]
+    name: Pre-commit
+    uses: ./.github/workflows/pre-commit.yaml
+    permissions:
+      contents: write # needed for mutex
+      id-token: write # needed to assume OIDC roles (e.g. for downloading from CodeArtifact)
+    with:
+      python-version: 3.13.2
+
+
+
+
+
+  required-check:
+    runs-on: ubuntu-24.04
+    permissions:
+      statuses: write # needed for updating status on Dependabot PRs
+    needs:
+      - get-values
+      - lint
+    if: always()
+    steps:
+      - name: fail if prior job failure
+        if: needs.lint.result != 'success'
+        run: |
+          exit 1
+      - name: Mark updated Dependabot commit of devcontainer hash as succeeded
+        if: needs.get-values.outputs.dependabot-commit-created == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api \
+            -X POST -H "Accept: application/vnd.github.v3+json" \
+            "/repos/${{ github.repository }}/statuses/${{ needs.get-values.outputs.new-dependabot-sha }}" \
+            -f state=success -f context="required-check" -f description="Initial CI run passed" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

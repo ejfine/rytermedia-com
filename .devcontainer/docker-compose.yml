@@ -1,0 +1,31 @@
+services:
+  devcontainer:
+    # added the platform flag to override any local settings since this image is only compatible with linux/amd64.
+    platform: linux/amd64
+    build:
+      context: .
+      args:
+        REPO_NAME: rytermedia-com
+    # You can run `devcontainer-info content-url` in codespaces to see what image base is
+    volumes:
+      - ..:/workspaces/rytermedia-com:cached
+      # Break out the venv folder as a separate docker volume for better performance on Windows hosts
+
+      - python_infrastructure_venv:/workspaces/rytermedia-com/infrastructure/.venv
+      # Break out the pnpm store folder as a separate docker volume for better performance on Windows hosts
+      - pnpm_store:/workspaces/rytermedia-com/.pnpm-store
+      # And node_modules
+      - app_node_modules:/workspaces/rytermedia-com/rytermedia_app/node_modules
+    command: sleep infinity
+    ports:
+      - "49932:2222"
+    environment:
+      - AWS_PROFILE=localstack
+      - AWS_DEFAULT_REGION=us-east-1
+
+
+volumes:
+
+  python_infrastructure_venv: {}
+  pnpm_store: {}
+  app_node_modules: {}
