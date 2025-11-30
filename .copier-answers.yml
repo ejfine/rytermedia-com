@@ -1,0 +1,21 @@
+# Changes here will be overwritten by Copier
+_commit: v0.0.5
+_src_path: gh:LabAutomationAndScreening/copier-nuxt-static-aws.git
+app_domain_name: www.rytermedia.com
+app_name: rytermedia
+aws_identity_center_id: d-9067c20053
+aws_org_home_region: us-east-1
+aws_production_account_id: '609350892236'
+aws_region_for_stack: us-east-1
+description: Website for Ryter Media
+has_backend: false
+install_claude_cli: false
+is_open_source: true
+node_version: 24.7.0
+python_package_registry: PyPI
+python_version: 3.13.2
+repo_name: rytermedia-com
+repo_org_name: ejfine
+ssh_port_number: 49932
+use_staging_environment: false
+
