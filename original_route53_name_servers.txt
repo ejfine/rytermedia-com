@@ -1,0 +1,9 @@
+# currently FreeDNS from namecheap.com is being used instead of a Route53 Hosted Zone. These were the original nameservers:
+ns-498.awsdns-62.com
+ns-1602.awsdns-08.co.uk
+ns-805.awsdns-36.net
+ns-1362.awsdns-42.org
+
+
+# there was also a SOA record created in the default Route 53 Hosted Zone
+ns-498.awsdns-62.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
