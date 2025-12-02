@@ -1,11 +1,12 @@
+import hashlib
 import logging
 import mimetypes
 import os
 from pathlib import Path
-from uuid import uuid4
 
 import pulumi
 from ephemeral_pulumi_deploy import append_resource_suffix
+from ephemeral_pulumi_deploy import common_tags
 from ephemeral_pulumi_deploy import common_tags_native
 from ephemeral_pulumi_deploy import get_aws_account_id
 from ephemeral_pulumi_deploy import get_config_str
@@ -14,6 +15,7 @@ from pulumi import Output
 from pulumi import Resource
 from pulumi import ResourceOptions
 from pulumi import export
+from pulumi_aws.acm import Certificate
 from pulumi_aws.iam import GetPolicyDocumentStatementArgs
 from pulumi_aws.iam import GetPolicyDocumentStatementPrincipalArgs
 from pulumi_aws.iam import get_policy_document
@@ -33,6 +35,26 @@ repo_root = Path(__file__).parent.parent.parent.parent
 def _get_mime_type(file_path: Path) -> str:
     content_type, _ = mimetypes.guess_type(file_path)
     return content_type or "application/octet-stream"
+
+
+def _compute_directory_hash(base_dir: Path) -> str:
+    """Compute a hash of all files in a directory based on their paths, sizes, and modification times."""
+    hash_md5 = hashlib.md5()  # noqa: S324 # we don't care about security here, just if files have changed for creating the invalidation
+
+    for dirpath, _, filenames in sorted(os.walk(base_dir)):
+        for filename in sorted(filenames):
+            file_path = Path(dirpath) / filename
+            rel_path = os.path.relpath(file_path, base_dir)
+
+            # Hash the relative path
+            hash_md5.update(rel_path.encode())
+
+            # Hash file size and mtime
+            stat = file_path.stat()
+            hash_md5.update(str(stat.st_size).encode())
+            hash_md5.update(str(stat.st_mtime).encode())
+
+    return hash_md5.hexdigest()
 
 
 def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Resource]:
@@ -101,10 +123,9 @@ def pulumi_program() -> None:
         bucket=app_website_bucket.bucket_name,  # pyright: ignore[reportArgumentType] # it doesn't seem like it's possible for the bucket name to actually be Output[None]...not sure why the typing suggests that...and not sure a way to assert about Output subtypes
         policy_document=policy_json,
     )
+    static_files_dir = repo_root / APP_DIRECTORY_NAME / ".output" / "public"
 
-    all_uploads = _upload_assets_to_s3(
-        bucket_id=app_website_bucket.id, base_dir=repo_root / APP_DIRECTORY_NAME / ".output" / "public"
-    )
+    all_uploads = _upload_assets_to_s3(bucket_id=app_website_bucket.id, base_dir=static_files_dir)
     if env in PROTECTED_ENVS:
         origin_id = "S3OriginMyBucket"
         origin_domain = app_website_bucket.website_url.apply(lambda full_url: full_url.removeprefix("http://"))
@@ -148,7 +169,15 @@ def pulumi_program() -> None:
         _ = Command(
             append_resource_suffix("app-cloudfront-invalidation"),
             create=app_cloudfront.id.apply(
-                lambda distribution_id: f'aws cloudfront create-invalidation --distribution-id {distribution_id} --paths "/*" && echo {uuid4()}'
+                lambda distribution_id: f'aws cloudfront create-invalidation --distribution-id {distribution_id} --paths "/*" && echo {_compute_directory_hash(static_files_dir)}'
             ),
             opts=ResourceOptions(depends_on=all_uploads),
         )
+        certificate = Certificate(
+            append_resource_suffix("certificate"),
+            domain_name="*.rytermedia.com",
+            validation_method="DNS",
+            tags=common_tags(),
+        )
+        export("certificate-cname-name", certificate.domain_validation_options[0].resource_record_name)
+        export("certificate-cname-value", certificate.domain_validation_options[0].resource_record_value)
