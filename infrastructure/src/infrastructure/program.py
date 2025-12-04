@@ -2,6 +2,7 @@ import hashlib
 import logging
 import mimetypes
 import os
+from collections.abc import Sequence
 from pathlib import Path
 
 import pulumi
@@ -16,6 +17,7 @@ from pulumi import Resource
 from pulumi import ResourceOptions
 from pulumi import export
 from pulumi_aws.acm import Certificate
+from pulumi_aws.acm.outputs import CertificateDomainValidationOption
 from pulumi_aws.iam import GetPolicyDocumentStatementArgs
 from pulumi_aws.iam import GetPolicyDocumentStatementPrincipalArgs
 from pulumi_aws.iam import get_policy_document
@@ -27,6 +29,8 @@ from pulumi_command.local import Command
 from .jinja_constants import APP_DIRECTORY_NAME
 from .jinja_constants import APP_DOMAIN_NAME
 
+RAW_DOMAIN_NAME = APP_DOMAIN_NAME.removeprefix("www.")
+ATTACH_ACM_CERT_TO_CLOUDFRONT = True
 logger = logging.getLogger(__name__)
 
 repo_root = Path(__file__).parent.parent.parent.parent
@@ -127,12 +131,28 @@ def pulumi_program() -> None:
 
     all_uploads = _upload_assets_to_s3(bucket_id=app_website_bucket.id, base_dir=static_files_dir)
     if env in PROTECTED_ENVS:
+        certificate = Certificate(
+            append_resource_suffix("certificate"),
+            domain_name=f"*.{RAW_DOMAIN_NAME}",
+            validation_method="DNS",
+            region="us-east-1",
+            tags=common_tags(),
+        )
         origin_id = "S3OriginMyBucket"
         origin_domain = app_website_bucket.website_url.apply(lambda full_url: full_url.removeprefix("http://"))
+        viewer_certificate = cloudfront.DistributionViewerCertificateArgs(cloud_front_default_certificate=True)
+        if ATTACH_ACM_CERT_TO_CLOUDFRONT:
+            viewer_certificate = cloudfront.DistributionViewerCertificateArgs(  # TODO: determine if this needs to be attached to EVERY distribution, or just a single distribution unrelated to the actual bucket
+                acm_certificate_arn=certificate.arn,
+                ssl_support_method="sni-only",
+                minimum_protocol_version="TLSv1.2_2021",
+            )
         app_cloudfront = cloudfront.Distribution(
             append_resource_suffix("app"),
             distribution_config=cloudfront.DistributionConfigArgs(
+                aliases=[APP_DOMAIN_NAME],
                 price_class="PriceClass_100",
+                comment=f"{RAW_DOMAIN_NAME} App CloudFront Distribution",
                 origins=[
                     cloudfront.DistributionOriginArgs(
                         domain_name=origin_domain,
@@ -160,7 +180,7 @@ def pulumi_program() -> None:
                 restrictions=cloudfront.DistributionRestrictionsArgs(
                     geo_restriction=cloudfront.DistributionGeoRestrictionArgs(restriction_type="none")
                 ),
-                viewer_certificate=cloudfront.DistributionViewerCertificateArgs(cloud_front_default_certificate=True),
+                viewer_certificate=viewer_certificate,
             ),
             tags=common_tags_native(),
         )
@@ -173,11 +193,12 @@ def pulumi_program() -> None:
             ),
             opts=ResourceOptions(depends_on=all_uploads),
         )
-        certificate = Certificate(
-            append_resource_suffix("certificate"),
-            domain_name="*.rytermedia.com",
-            validation_method="DNS",
-            tags=common_tags(),
-        )
-        export("certificate-cname-name", certificate.domain_validation_options[0].resource_record_name)
+
+        def _extract_host(options: Sequence[CertificateDomainValidationOption]) -> str:
+            record_name = options[0].resource_record_name
+            assert record_name is not None
+            return record_name.removesuffix(f".{RAW_DOMAIN_NAME}.")
+
+        cname_host = certificate.domain_validation_options.apply(_extract_host)
+        export("certificate-cname-host", cname_host)
         export("certificate-cname-value", certificate.domain_validation_options[0].resource_record_value)
