@@ -30,6 +30,31 @@ jobs:
     with:
       python-version: 3.13.2
 
+  build-app-frontend:
+    needs:
+      - lint
+    timeout-minutes: 8
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5.0.0
+
+      - name: Install latest versions of node packages
+        uses: ./.github/actions/install_deps
+        with:
+          node-version: 24.7.0
+          skip-installing-ssm-plugin-manager: true
+
+      - name: Build frontend
+        run: pnpm --dir=rytermedia_app generate
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: app-frontend-static-assets
+          path: rytermedia_app/.output/public/**/*
+          if-no-files-found: error
+
 
 
 
@@ -41,10 +66,11 @@ jobs:
     needs:
       - get-values
       - lint
+      - build-app-frontend
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.lint.result != 'success'
+        if: needs.lint.result != 'success' || needs.build-app-frontend.result != 'success'
         run: |
           exit 1
       - name: Mark updated Dependabot commit of devcontainer hash as succeeded
