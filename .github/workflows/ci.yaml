@@ -57,7 +57,25 @@ jobs:
 
 
 
-
+  pulumi-prod:
+    uses: ./.github/workflows/pulumi-aws.yml
+    if: github.event_name == 'pull_request' || github.event_name == 'merge_group' || github.ref == 'refs/heads/main'
+    needs:
+      - build-app-frontend
+    permissions:
+      id-token: write # needed to assume OIDC roles (e.g. for downloading from CodeArtifact)
+      contents: write # needed for mutex
+    with:
+      AWS_REGION: us-east-1
+      PULUMI_STACK_NAME: prod
+      PYTHON_VERSION: 3.13.2
+      PROJECT_DIR: ./infrastructure
+      DEPLOY_SCRIPT_MODULE_NAME: infrastructure
+      PULUMI_PREVIEW: true
+      PREVIEW_ROLE_NAME: InfraPreview--rytermedia-com
+      PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
+      PULUMI_UP_ROLE_NAME: InfraDeploy--rytermedia-com
+      AWS_ACCOUNT_ID: "609350892236"
 
   required-check:
     runs-on: ubuntu-24.04
@@ -67,10 +85,11 @@ jobs:
       - get-values
       - lint
       - build-app-frontend
+      - pulumi-prod
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.lint.result != 'success' || needs.build-app-frontend.result != 'success'
+        if: needs.lint.result != 'success' || needs.build-app-frontend.result != 'success' || (needs.pulumi-prod.result != 'success' && needs.pulumi-prod.result != 'skipped')
         run: |
           exit 1
       - name: Mark updated Dependabot commit of devcontainer hash as succeeded
