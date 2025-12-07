@@ -1,8 +1,9 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.7
+_commit: v0.0.8
 _src_path: gh:LabAutomationAndScreening/copier-nuxt-static-aws.git
 app_domain_name: www.rytermedia.com
 app_name: rytermedia
+attach_acm_cert_to_cloudfront: true
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
 aws_production_account_id: '609350892236'
