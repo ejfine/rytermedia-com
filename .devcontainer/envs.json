@@ -3,5 +3,10 @@
     "description": "infrastructure",
     "relative_directory": "./infrastructure",
     "package_manager": "uv"
+  },
+  {
+    "description": "app-frontend",
+    "relative_directory": "rytermedia_app",
+    "package_manager": "pnpm"
   }
 ]

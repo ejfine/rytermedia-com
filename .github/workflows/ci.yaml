@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - 'gh-readonly-queue/**' # don't run (again) when on these special branches created during merge groups; the `on: merge_group` already triggers it.
   merge_group:
+  pull_request:
 
 env:
   PYTHONUNBUFFERED: True
@@ -30,9 +31,55 @@ jobs:
     with:
       python-version: 3.13.2
 
+  build-app-frontend:
+    needs:
+      - lint
+    timeout-minutes: 8
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5.0.0
+
+      - name: Install latest versions of node packages
+        uses: ./.github/actions/install_deps
+        with:
+          node-version: 24.7.0
+          skip-installing-ssm-plugin-manager: true
+
+      - name: Build frontend
+        run: pnpm --dir=rytermedia_app generate
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: app-frontend-static-assets
+          path: rytermedia_app/.output/public/**/*
+          if-no-files-found: error
 
 
 
+
+  pulumi-prod:
+    uses: ./.github/workflows/pulumi-aws.yml
+    if: github.event_name == 'pull_request' || github.event_name == 'merge_group' || github.ref == 'refs/heads/main'
+    needs:
+      - build-app-frontend
+    permissions:
+      id-token: write # needed to assume OIDC roles (e.g. for downloading from CodeArtifact)
+      contents: write # needed for mutex
+    with:
+      AWS_REGION: us-east-1
+      PULUMI_STACK_NAME: prod
+      PYTHON_VERSION: 3.13.2
+      PROJECT_DIR: ./infrastructure
+      DEPLOY_SCRIPT_MODULE_NAME: infrastructure
+      PULUMI_PREVIEW: true
+      PREVIEW_ROLE_NAME: InfraPreview--rytermedia-com
+      PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
+      PULUMI_UP_ROLE_NAME: InfraDeploy--rytermedia-com
+      AWS_ACCOUNT_ID: "609350892236"
+      DOWNLOAD_ARTIFACT_NAME: app-frontend-static-assets
+      DOWNLOAD_ARTIFACT_PATH: rytermedia_app/.output/public/
 
   required-check:
     runs-on: ubuntu-24.04
@@ -41,10 +88,12 @@ jobs:
     needs:
       - get-values
       - lint
+      - build-app-frontend
+      - pulumi-prod
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.lint.result != 'success'
+        if: needs.lint.result != 'success' || needs.build-app-frontend.result != 'success' || (needs.pulumi-prod.result != 'success' && needs.pulumi-prod.result != 'skipped')
         run: |
           exit 1
       - name: Mark updated Dependabot commit of devcontainer hash as succeeded
