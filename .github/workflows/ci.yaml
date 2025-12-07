@@ -57,6 +57,7 @@ jobs:
 
 
 
+
   pulumi-prod:
     uses: ./.github/workflows/pulumi-aws.yml
     if: github.event_name == 'pull_request' || github.event_name == 'merge_group' || github.ref == 'refs/heads/main'
@@ -76,6 +77,8 @@ jobs:
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
       PULUMI_UP_ROLE_NAME: InfraDeploy--rytermedia-com
       AWS_ACCOUNT_ID: "609350892236"
+      DOWNLOAD_ARTIFACT_NAME: app-frontend-static-assets
+      DOWNLOAD_ARTIFACT_PATH: rytermedia_app/.output/public/
 
   required-check:
     runs-on: ubuntu-24.04
