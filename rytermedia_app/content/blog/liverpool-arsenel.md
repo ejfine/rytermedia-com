@@ -12,9 +12,11 @@ author:
 ---
 
 ## Summary
+
 Liverpool hosted a fellow 100% record side Arsenal on Monday afternoon. At least one of the two teams if not both would lose that record. It ended up being the visiting Gunners after a dominant display from the Reds of Merseyside.
 
 ## Highlights
+
 Mikel Arteta and Arsenal had a pretty clear game plan of sitting back defensively but then not being scared to send numbers forward with the chance of a counterattack. Liverpool and Jurgen Klopp accepted this, having the majority of the chances in the opening 20 minutes. Their ever-present pressing made it hard on Arsenal defenders, while their intricate build up play created some dangerous chances. Most notably a chance for Sadio Mané after his delayed run into the box was picked out by Trent Alexander-Arnold and his first-time shot was well saved by Bernd Leno.
 
 Even with the early chances falling Liverpool’s way, Arsenal were the ones to score first. It was their first attack of the game in the 25th minute. A brilliant pass by Granit Xhaka broke through Liverpool’s press and midfield. Alexandre Lacazette then sent Ainsley Maitland-Niles down the left-hand side into acres of space. His resulting cross was trying to find Willian but only was able to find Andy Robertson, whose attempted clearance hit off of his heel and fell kindly to Lacazette unmarked right in front of goal. His scuffed shot still found its way over Alisson Becker who was caught by surprise by Lacazette’s less than ideal connection. It doesn’t really matter how, what matters is Arsenal took the lead. It was definitely against the run of play.
@@ -29,5 +31,6 @@ Sure enough, Liverpool continued to dominate with Arsenal not getting too many c
 
 With that goal coming in the 88th minute, the game was done and dusted. Liverpool would end up as 3-1 winners. Jota’s goal means Liverpool jump over Everton into second place in the premier league with three wins from three games, meaning Jota is probably already loved by Liverpool fans around Merseyside. Arsenal on the other hand drop to fifth place but can come away with a lot of positives and a benchmark for where they need to be in order to challenge for silverware.
 
-## Summary
+## Conclusion
+
 This game was utterly dominant from Liverpool. It can act as yet another strong message to the rest of the Premier League that they aren’t going anywhere. They showed in this game they’ll be just as good if not better as they were last season. If other teams want to catch up, they’ll need to match that quality of play. Liverpool seemed to slowly but surely ramp up the pressure on Arsenal and always looked in control, even when they were scored on. Other than one mistake that seemed more unlucky than a lack of concentration, they looked in peak form. They seemed to score when they wanted, with a prime example being the fact that they scored right after Arsenal did. It was a sublime performance. And it sends a clear message to the league: Liverpool are still definitely title contenders. If other teams in the league want the Premier League trophy, it’s looking like they’ll need to go through Liverpool to get there.
