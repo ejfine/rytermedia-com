@@ -28,9 +28,10 @@ from pulumi_command.local import Command
 
 from .jinja_constants import APP_DIRECTORY_NAME
 from .jinja_constants import APP_DOMAIN_NAME
+from .jinja_constants import ATTACH_ACM_CERT_TO_CLOUDFRONT
 
 RAW_DOMAIN_NAME = APP_DOMAIN_NAME.removeprefix("www.")
-ATTACH_ACM_CERT_TO_CLOUDFRONT = True
+
 logger = logging.getLogger(__name__)
 
 repo_root = Path(__file__).parent.parent.parent.parent
