@@ -39,7 +39,7 @@ export default defineAppConfig({
         "aria-label": "Ryter Media on X",
       },
       {
-        icon: "i-simple-icons-gondola",
+        icon: "i-mdi-gondola",
         to: "https://gondola.cc/RyterEthan",
         target: "_blank",
         "aria-label": "Ryter Media on Gondola",

@@ -7,8 +7,8 @@ type Event = {
   category: "Conference" | "Live talk" | "Podcast";
 };
 
-const { data: page } = await useAsyncData("speaking", () => {
-  return queryCollection("speaking").first();
+const { data: page } = await useAsyncData("services", () => {
+  return queryCollection("services").first();
 });
 if (!page.value) {
   throw createError({

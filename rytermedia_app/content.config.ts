@@ -112,7 +112,7 @@ export default defineContentConfig({
     }),
     speaking: defineCollection({
       type: "page",
-      source: "speaking.yml",
+      source: "services.yml",
       schema: z.object({
         links: z.array(createButtonSchema()),
         events: z.array(
