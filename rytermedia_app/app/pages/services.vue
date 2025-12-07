@@ -51,8 +51,8 @@ function formatDate(dateString: string): string {
       :title="page.title"
       :description="page.description"
       :ui="{
-        title: '!mx-0 text-left',
-        description: '!mx-0 text-left',
+        title: 'mx-0! text-left',
+        description: 'mx-0! text-left',
         links: 'justify-start',
       }"
     >
