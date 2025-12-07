@@ -13,7 +13,7 @@ const { data: posts } = await useAsyncData("blogs", () => queryCollection("blog"
 if (!posts.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: "blogs posts not found",
+    statusMessage: "blog posts not found",
     fatal: true,
   });
 }
@@ -40,7 +40,7 @@ useSeoMeta({
     />
     <UPageSection
       :ui="{
-        container: '!pt-0',
+        container: 'pt-0!',
       }"
     >
       <UBlogPosts orientation="vertical">

@@ -42,7 +42,7 @@ useSeoMeta({
     </UPageHero>
     <UPageSection
       :ui="{
-        container: '!pt-0',
+        container: 'pt-0!',
       }"
     >
       <MDC :value="page.content" unwrap="p" />

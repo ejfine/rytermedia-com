@@ -62,7 +62,7 @@ function formatDate(dateString: string): string {
     </UPageHero>
     <UPageSection
       :ui="{
-        container: '!pt-0',
+        container: 'pt-0!',
       }"
     >
       <div
