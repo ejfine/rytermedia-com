@@ -1,0 +1,13 @@
+# packages:  # TODO: move this to top level and change the mount for node_modules in devcontainer
+#   - 'rytermedia_app'
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - unrs-resolver
+  - vue-demi
+
+onlyBuiltDependencies:
+  - better-sqlite3
+  - sharp

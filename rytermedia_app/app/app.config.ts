@@ -1,18 +1,49 @@
 export default defineAppConfig({
+  global: {
+    picture: {
+      dark: "/images/headshot.jpg",
+      light: "/images/headshot.jpg",
+      alt: "My profile picture",
+    },
+    meetingLink: "https://cal.com/",
+    email: "ui-pro@nuxt.com",
+    available: true,
+  },
   ui: {
     colors: {
-      primary: "cyan",
-      secondary: "blue",
-      success: "green",
-      info: "blue",
-      warning: "yellow",
-      error: "red",
-      neutral: "slate",
+      primary: "blue",
+      neutral: "neutral",
     },
-    inputMenu: {
+    pageHero: {
       slots: {
-        content: "min-w-fit",
+        container: "py-18 sm:py-24 lg:py-32",
+        title: "mx-auto max-w-xl text-pretty text-3xl sm:text-4xl lg:text-5xl",
+        description: "mt-2 text-md mx-auto max-w-2xl text-pretty sm:text-md text-muted",
       },
     },
+  },
+  footer: {
+    credits: `© ${new Date().getFullYear()} Ryter Media`,
+    colorMode: false,
+    links: [
+      {
+        icon: "i-simple-icons-instagram",
+        to: "https://www.instagram.com/rytermedia/",
+        target: "_blank",
+        "aria-label": "Ryter Media on Instagram",
+      },
+      {
+        icon: "i-simple-icons-x",
+        to: "https://x.com/RyterEthan",
+        target: "_blank",
+        "aria-label": "Ryter Media on X",
+      },
+      {
+        icon: "i-mdi-gondola",
+        to: "https://gondola.cc/RyterEthan",
+        target: "_blank",
+        "aria-label": "Ryter Media on Gondola",
+      },
+    ],
   },
 });
