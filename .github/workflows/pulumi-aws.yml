@@ -76,6 +76,16 @@ on:
         required: false
         default: ''
         type: string
+      DOWNLOAD_ARTIFACT_NAME:
+        description: 'Name of the artifact to download from the build job'
+        required: false
+        default: ''
+        type: string
+      DOWNLOAD_ARTIFACT_PATH:
+        description: 'Path to extract the downloaded artifact to'
+        required: false
+        default: ''
+        type: string
     secrets:
       iac-github-api-tokens:
         description: 'API tokens to use for Github IaC deployment when not using AWS Secrets Manager'
