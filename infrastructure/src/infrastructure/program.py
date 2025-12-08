@@ -81,6 +81,7 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
                     source=pulumi.FileAsset(str(file_path)),
                     source_hash=hashlib.md5(file_path.read_bytes()).hexdigest(),  # noqa: S324 # we're just using this for change detection, not security
                     tags=common_tags(),
+                    opts=ResourceOptions(ignore_changes=["source"]),
                 )
             )
     return uploads
