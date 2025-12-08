@@ -39,6 +39,8 @@ repo_root = Path(__file__).parent.parent.parent.parent
 
 def _get_mime_type(file_path: Path) -> str:
     content_type, _ = mimetypes.guess_type(file_path)
+    if content_type == "text/javascript":
+        return "application/javascript"  # for some reason in CI, it was returning text/javascript
     return content_type or "application/octet-stream"
 
 
