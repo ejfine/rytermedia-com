@@ -65,6 +65,7 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
     for dirpath, _, filenames in os.walk(base_dir):
         for filename in filenames:
             file_path = Path(dirpath) / filename
+            relative_path = Path("..") / file_path.relative_to(repo_root)
 
             # Compute the S3 key relative to the base directory.
             # For example, if base_dir is "./upload-dir" and file_path is "./upload-dir/docs/readme.txt",
@@ -79,8 +80,8 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
                     content_type=_get_mime_type(file_path),
                     bucket=bucket_id,
                     key=s3_key,
-                    source=pulumi.FileAsset(str(file_path)),
-                    etag=source_hash,
+                    source=pulumi.FileAsset(str(relative_path)),
+                    source_hash=source_hash,
                     tags=common_tags(),
                 )
             )
