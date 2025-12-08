@@ -65,7 +65,9 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
     for dirpath, _, filenames in os.walk(base_dir):
         for filename in filenames:
             file_path = Path(dirpath) / filename
-            relative_path = Path("..") / file_path.relative_to(repo_root)
+            relative_path = Path("..") / file_path.relative_to(
+                repo_root
+            )  # ensure that the FileAsset path will work both locally and in CI by using a relative path
 
             # Compute the S3 key relative to the base directory.
             # For example, if base_dir is "./upload-dir" and file_path is "./upload-dir/docs/readme.txt",
