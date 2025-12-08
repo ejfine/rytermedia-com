@@ -79,8 +79,8 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
                     content_type=_get_mime_type(file_path),
                     bucket=bucket_id,
                     key=s3_key,
-                    source=pulumi.FileAsset(str(file_path.relative_to(repo_root))),
-                    source_hash=source_hash,
+                    source=pulumi.FileAsset(str(file_path)),
+                    etag=source_hash,
                     tags=common_tags(),
                 )
             )
