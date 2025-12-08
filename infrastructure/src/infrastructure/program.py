@@ -72,16 +72,16 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
             s3_key = os.path.relpath(file_path, base_dir)
             # Since resource names cannot have slashes, we replace them with dashes.
             resource_name = append_resource_suffix(s3_key.replace(os.sep, "-"), max_length=200)
+            source_hash = hashlib.md5(file_path.read_bytes()).hexdigest()  # noqa: S324 # we're just using this for change detection, not security
             uploads.append(
                 BucketObjectv2(
                     resource_name,
                     content_type=_get_mime_type(file_path),
                     bucket=bucket_id,
                     key=s3_key,
-                    source=pulumi.FileAsset(str(file_path)),
-                    source_hash=hashlib.md5(file_path.read_bytes()).hexdigest(),  # noqa: S324 # we're just using this for change detection, not security
+                    source=pulumi.FileAsset(str(file_path.relative_to(repo_root))),
+                    source_hash=source_hash,
                     tags=common_tags(),
-                    opts=ResourceOptions(ignore_changes=["source"]),
                 )
             )
     return uploads
