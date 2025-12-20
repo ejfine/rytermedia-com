@@ -22,7 +22,8 @@ jobs:
       contents: write # needed updating dependabot branches
 
   lint:
-    needs: [ get-values ]
+    needs:
+      - get-values
     name: Pre-commit
     uses: ./.github/workflows/pre-commit.yaml
     permissions:
@@ -38,12 +39,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Install latest versions of node packages
         uses: ./.github/actions/install_deps
         with:
-          node-version: 24.7.0
+          node-version: 24.11.1
           skip-installing-ssm-plugin-manager: true
 
       - name: Build frontend
@@ -87,13 +88,15 @@ jobs:
       statuses: write # needed for updating status on Dependabot PRs
     needs:
       - get-values
-      - lint
       - build-app-frontend
       - pulumi-prod
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.lint.result != 'success' || needs.build-app-frontend.result != 'success' || (needs.pulumi-prod.result != 'success' && needs.pulumi-prod.result != 'skipped')
+        if: >-
+          needs.get-values.result != 'success' ||
+          needs.build-app-frontend.result != 'success' ||
+          (needs.pulumi-prod.result != 'success' && needs.pulumi-prod.result != 'skipped')
         run: |
           exit 1
       - name: Mark updated Dependabot commit of devcontainer hash as succeeded

@@ -39,6 +39,8 @@ repo_root = Path(__file__).parent.parent.parent.parent
 
 def _get_mime_type(file_path: Path) -> str:
     content_type, _ = mimetypes.guess_type(file_path)
+    if content_type == "text/javascript":
+        return "application/javascript"  # for some reason in CI, it was returning text/javascript
     return content_type or "application/octet-stream"
 
 
@@ -65,6 +67,9 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
     for dirpath, _, filenames in os.walk(base_dir):
         for filename in filenames:
             file_path = Path(dirpath) / filename
+            relative_path = Path("..") / file_path.relative_to(
+                repo_root
+            )  # ensure that the FileAsset path will work both locally and in CI by using a relative path
 
             # Compute the S3 key relative to the base directory.
             # For example, if base_dir is "./upload-dir" and file_path is "./upload-dir/docs/readme.txt",
@@ -72,13 +77,16 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
             s3_key = os.path.relpath(file_path, base_dir)
             # Since resource names cannot have slashes, we replace them with dashes.
             resource_name = append_resource_suffix(s3_key.replace(os.sep, "-"), max_length=200)
+            source_hash = hashlib.md5(file_path.read_bytes()).hexdigest()  # noqa: S324 # we're just using this for change detection, not security
             uploads.append(
                 BucketObjectv2(
                     resource_name,
                     content_type=_get_mime_type(file_path),
                     bucket=bucket_id,
                     key=s3_key,
-                    source=pulumi.FileAsset(str(file_path)),
+                    source=pulumi.FileAsset(str(relative_path)),
+                    source_hash=source_hash,
+                    tags=common_tags(),
                 )
             )
     return uploads
