@@ -1,7 +1,7 @@
-title: Talks & Workshops
+title: Services
 description: Explore talks and workshops I've given on UX design, front-end development, and building better digital products.
 links:
-  - label: Invite me to speak
+  - label: View projects I've worked on as a sports multimedia journalist
     size: md
 events:
   # - category: Conference
@@ -41,8 +41,7 @@ events:
   #   date: "2024-01-30"
   #   location: "Design Details Podcast (Guest)"
   #   url: "#"
-  - category: Podcast
+  - category: Photography
     title: "Building a Career in UX/UI & Development"
-    date: "2023-05-22"
-    location: "TechForward Boston Podcast"
+    description: "2023-05-22"
     url: "#"

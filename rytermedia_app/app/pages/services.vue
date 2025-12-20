@@ -1,10 +1,9 @@
 <script setup lang="ts">
 type Event = {
   title: string;
-  date: string;
-  location: string;
+  description: string;
   url?: string;
-  category: "Conference" | "Live talk" | "Podcast";
+  category: "Photography" | "Videography" | "Social Media" | "Writing";
 };
 
 const { data: page } = await useAsyncData("services", () => {
@@ -30,9 +29,10 @@ const { global } = useAppConfig();
 const groupedEvents = computed((): Record<Event["category"], Event[]> => {
   const events = page.value?.events || [];
   const grouped: Record<Event["category"], Event[]> = {
-    Conference: [],
-    "Live talk": [],
-    Podcast: [],
+    Photography: [],
+    Videography: [],
+    "Social Media": [],
+    Writing: [],
   };
   for (const event of events) {
     if (grouped[event.category]) grouped[event.category].push(event);
@@ -57,7 +57,7 @@ function formatDate(dateString: string): string {
       }"
     >
       <template #links>
-        <UButton v-if="page.links" :to="`mailto:${global.email}`" v-bind="page.links[0]" />
+        <UButton v-if="page.links" :to="`/projects`" v-bind="page.links[0]" />
       </template>
     </UPageHero>
     <UPageSection
@@ -83,20 +83,17 @@ function formatDate(dateString: string): string {
             class="group relative pl-6 border-l border-default"
           >
             <NuxtLink v-if="event.url" :to="event.url" class="absolute inset-0" />
-            <div class="mb-1 text-sm font-medium text-muted">
-              <span>{{ event.location }}</span>
-              <span v-if="event.location && event.date" class="mx-1">·</span>
-              <span v-if="event.date">{{ formatDate(event.date) }}</span>
-            </div>
 
             <h3 class="text-lg font-semibold text-highlighted">
               {{ event.title }}
             </h3>
-
+            <div class="mb-1 text-sm font-medium text-muted">
+              <span>{{ event.description }}</span>
+            </div>
             <UButton
               v-if="event.url"
               target="_blank"
-              :label="event.category === 'Podcast' ? 'Listen' : 'Watch'"
+              :label="event.category === 'Podcast' ? 'Listen' : 'View'"
               variant="link"
               class="p-0 pt-2 gap-0"
             >
