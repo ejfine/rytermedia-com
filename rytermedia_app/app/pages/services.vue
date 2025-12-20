@@ -29,8 +29,8 @@ const { global } = useAppConfig();
 const groupedEvents = computed((): Record<Event["category"], Event[]> => {
   const events = page.value?.events || [];
   const grouped: Record<Event["category"], Event[]> = {
-    Photography: [],
     Videography: [],
+    Photography: [],
     "Social Media": [],
     Writing: [],
   };
@@ -39,10 +39,6 @@ const groupedEvents = computed((): Record<Event["category"], Event[]> => {
   }
   return grouped;
 });
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString("en-US", { year: "numeric", month: "long" });
-}
 </script>
 
 <template>
@@ -72,7 +68,7 @@ function formatDate(dateString: string): string {
       >
         <div class="lg:col-span-1 mb-4 lg:mb-0">
           <h2 class="lg:sticky lg:top-16 text-xl font-semibold tracking-tight text-highlighted">
-            {{ category.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) }}s
+            {{ category.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) }}
           </h2>
         </div>
 

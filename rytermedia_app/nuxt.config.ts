@@ -23,6 +23,8 @@ export default defineNuxtConfig({
   experimental: { appManifest: false }, // https://github.com/nuxt/nuxt/issues/30461#issuecomment-2572616714
   nitro: {
     prerender: {
+      // Skip OG image routes in development
+      ignore: process.env.NODE_ENV !== "production" ? ["/__og-image__/**"] : [],
       concurrency: 1, // lower the concurrency to not be such a memory hog
       interval: 200, // ms pause between batches – lets the Garbage Collector catch up
     },

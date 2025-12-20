@@ -1,0 +1,16 @@
+title: Gallery
+description: Learn more about my journey as a Georgia-based sports journalist, my reporting philosophy, and my passion for bringing stories to life through multimedia.
+# content: |
+#   Stuff
+images:
+  - alt: My coffee workspace
+    src: /images/headshot.jpg
+    category: Family Portraits
+
+  - alt: My trip to Tokyo
+    src: /images/liverpool.png
+    category: Family Portraits
+
+  - alt: My trip to Tokyo22
+    src: images/liverpool.png
+    category: Senior Athletes
