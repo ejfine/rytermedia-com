@@ -59,7 +59,7 @@ export default defineContentConfig({
               company: z.object({
                 name: z.string(),
                 url: z.string(),
-                logo: z.string().editor({ input: "icon" }),
+                logo: z.string().editor({ input: "icon" }).optional(),
                 color: z.string(),
               }),
             }),
@@ -138,7 +138,6 @@ export default defineContentConfig({
       type: "page",
       source: "gallery.yml",
       schema: z.object({
-        // content: z.object({}),
         images: z.array(createImageSchema()),
       }),
     }),

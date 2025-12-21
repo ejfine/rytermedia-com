@@ -37,10 +37,16 @@ experience:
   title: Work Experience
   items:
     - position: "Senior UX/UI Designer at"
-      date: "2020 - 2021"
+      date: "2024 - Present"
       company:
         name: Linear
         logo: "i-simple-icons-linear"
+        url: "https://linear.app"
+        color: "#5E6AD2"
+    - position: "Senior UX/UI Designer at"
+      date: "2020 - 2021"
+      company:
+        name: Linear
         url: "https://linear.app"
         color: "#5E6AD2"
 testimonials:

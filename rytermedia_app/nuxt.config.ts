@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/content',
     '@vueuse/nuxt',
-    'nuxt-og-image',
+    ...(process.env.NODE_ENV === 'production' ? ['nuxt-og-image'] : []),
     'motion-v/nuxt',
     ["@nuxt/eslint", { devOnly: true }],
     ["@nuxt/test-utils/module", { devOnly: true }],
