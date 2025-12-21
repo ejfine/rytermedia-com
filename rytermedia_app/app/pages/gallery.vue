@@ -60,12 +60,10 @@ useSeoMeta({
         v-for="(imagesInCategory, category) in groupedImages"
         :id="getCategoryId(category)"
         :key="category"
-        class="mb-16 last:mb-0"
+        class="mb-16 last:mb-0 scroll-mt-20"
       >
-        <h2 class="text-2xl font-bold mb-4 scroll-mt-24">
-          <a :href="`#${getCategoryId(category)}`">
-            {{ category }}
-          </a>
+        <h2 class="text-2xl font-bold mb-4">
+          {{ category }}
         </h2>
         <div>
           <div class="w-full" :class="{ 'masonry-container': imagesInCategory && imagesInCategory.length }">
