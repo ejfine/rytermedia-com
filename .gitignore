@@ -80,3 +80,4 @@ dist
 **/.DS_Store
 
 # Ignores specific to this repository
+rytermedia_app/public/s3
