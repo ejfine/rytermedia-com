@@ -47,6 +47,16 @@ jobs:
           node-version: 24.11.1
           skip-installing-ssm-plugin-manager: true
 
+      - name: AWS OIDC
+        uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::609350892236:role/InfraPreview--rytermedia-com
+          aws-region: "us-east-1"
+
+      - name: Download large media files from S3
+        run: |
+          aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/public/s3 ./rytermedia_app/public/s3
+
       - name: Build frontend
         run: pnpm --dir=rytermedia_app generate
 

@@ -2,7 +2,7 @@
 title: Liverpool vs Arsenal Match Recap
 description: A detailed breakdown of an exciting matchup between two rivals.
 date: 2020-09-29
-image: /images/liverpool.png
+image: /s3/images/liverpool.png
 minRead: 8
 author:
   name: Ethan Ryter

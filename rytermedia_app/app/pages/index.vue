@@ -26,10 +26,10 @@ useSeoMeta({
         container: 'pt-0! lg:grid lg:grid-cols-2 lg:gap-8',
       }"
     >
-      <LandingAbout :page />
-      <!-- <LandingWorkExperience :page /> -->
+      <!-- <LandingAbout :page /> -->
+      <LandingWorkExperience :page />
     </UPageSection>
-    <LandingBlog :page />
+    <!-- <LandingBlog :page /> -->
     <LandingTestimonials :page />
     <LandingFAQ :page />
   </UPage>

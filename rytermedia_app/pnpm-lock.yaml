@@ -18,7 +18,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(vue@3.5.25(typescript@5.9.3))
       '@nuxt/content':
-        specifier: ^3.8.2
+        specifier: ^3.9.0
         version: 3.9.0(better-sqlite3@12.5.0)(magicast@0.5.1)
       '@nuxt/fonts':
         specifier: ^0.12.1
@@ -93,6 +93,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.22(postcss@8.5.6)
+      debug:
+        specifier: ^4.4.3
+        version: 4.4.3
       dotenv-cli:
         specifier: ^11.0.0
         version: 11.0.0
@@ -105,6 +108,9 @@ importers:
       happy-dom:
         specifier: ^20.0.2
         version: 20.0.11
+      parse5:
+        specifier: ^8.0.0
+        version: 8.0.0
       playwright:
         specifier: ^1.57.0
         version: 1.57.0
@@ -114,12 +120,33 @@ importers:
       postcss:
         specifier: ^8.5.3
         version: 8.5.6
+      rehype-raw:
+        specifier: ^7.0.0
+        version: 7.0.0
+      remark-emoji:
+        specifier: ^5.0.2
+        version: 5.0.2
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1
+      remark-mdc:
+        specifier: ^3.9.0
+        version: 3.9.0
+      remark-rehype:
+        specifier: ^11.1.2
+        version: 11.1.2
       tailwindcss:
         specifier: ^4.1.11
         version: 4.1.17
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.0.3)(happy-dom@20.0.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2)

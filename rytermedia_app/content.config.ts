@@ -20,6 +20,7 @@ const createButtonSchema = () =>
 const createImageSchema = () =>
   z.object({
     src: z.string().editor({ input: "media" }),
+    category: z.string().optional(),
     alt: z.string(),
   });
 
@@ -58,7 +59,7 @@ export default defineContentConfig({
               company: z.object({
                 name: z.string(),
                 url: z.string(),
-                logo: z.string().editor({ input: "icon" }),
+                logo: z.string().editor({ input: "icon" }).optional(),
                 color: z.string(),
               }),
             }),
@@ -117,10 +118,9 @@ export default defineContentConfig({
         links: z.array(createButtonSchema()),
         events: z.array(
           z.object({
-            category: z.enum(["Live talk", "Podcast", "Conference"]),
+            category: z.enum(["Photography", "Videography", "Social Media", "Writing"]),
             title: z.string(),
-            date: z.date(),
-            location: z.string(),
+            description: z.string(),
             url: z.string().optional(),
           }),
         ),
@@ -130,7 +130,14 @@ export default defineContentConfig({
       type: "page",
       source: "about.yml",
       schema: z.object({
-        content: z.object({}),
+        content: z.string(),
+        images: z.array(createImageSchema()),
+      }),
+    }),
+    gallery: defineCollection({
+      type: "page",
+      source: "gallery.yml",
+      schema: z.object({
         images: z.array(createImageSchema()),
       }),
     }),
