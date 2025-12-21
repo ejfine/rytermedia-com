@@ -17,6 +17,7 @@ if (!page.value) {
 }
 
 const { global } = useAppConfig();
+const getCategoryId = (category: Image["category"]) => category.toLowerCase().replace(/\s+/g, "-");
 const groupedImages = computed((): Record<Image["category"], Image[]> => {
   const images = page.value?.images || [];
   const grouped: Record<Image["category"], Image[]> = {
@@ -55,9 +56,14 @@ useSeoMeta({
         container: 'pt-0!',
       }"
     >
-      <div v-for="(imagesInCategory, category) in groupedImages" :key="category" class="mb-16 last:mb-0">
-        <h2 class="text-2xl font-bold mb-4">
-          <a :href="`#${category.toLowerCase().replace(/\s+/g, '-')}`">
+      <div
+        v-for="(imagesInCategory, category) in groupedImages"
+        :id="getCategoryId(category)"
+        :key="category"
+        class="mb-16 last:mb-0"
+      >
+        <h2 class="text-2xl font-bold mb-4 scroll-mt-24">
+          <a :href="`#${getCategoryId(category)}`">
             {{ category }}
           </a>
         </h2>
