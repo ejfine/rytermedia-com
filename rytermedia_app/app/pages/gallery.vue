@@ -68,12 +68,7 @@ useSeoMeta({
         <div>
           <div class="w-full" :class="{ 'masonry-container': imagesInCategory && imagesInCategory.length }">
             <ul v-if="imagesInCategory && imagesInCategory.length" class="grid grid-cols-1 gap-4 lg:block">
-              <li
-                v-for="image in imagesInCategory"
-                ref="mansoryItem"
-                :key="image.src"
-                class="relative w-full group masonry-item"
-              >
+              <li v-for="image in imagesInCategory" :key="image.src" class="relative w-full group masonry-item">
                 <UModal fullscreen :title="image.alt">
                   <img
                     :src="image.src"

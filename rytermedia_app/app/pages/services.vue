@@ -68,7 +68,7 @@ const groupedEvents = computed((): Record<Event["category"], Event[]> => {
       >
         <div class="lg:col-span-1 mb-4 lg:mb-0">
           <h2 class="lg:sticky lg:top-16 text-xl font-semibold tracking-tight text-highlighted">
-            {{ category.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) }}
+            {{ category }}
           </h2>
         </div>
 

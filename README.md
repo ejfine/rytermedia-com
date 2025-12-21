@@ -10,7 +10,7 @@
 
 ## Download files from S3 locally
 ```bash
-aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/public/s3 ./rytermedia_app/public/s3 --dryrun
+aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/public/s3 ./rytermedia_app/public/s3
 ```
 
 ## Infrastructure Deployments
