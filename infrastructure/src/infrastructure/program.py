@@ -12,7 +12,7 @@ from ephemeral_pulumi_deploy import common_tags_native
 from ephemeral_pulumi_deploy import get_aws_account_id
 from ephemeral_pulumi_deploy import get_config_str
 from ephemeral_pulumi_deploy.utils import PROTECTED_ENVS
-from pulumi import ComponentResource
+from lab_auto_pulumi import ManualArtifactsBucket
 from pulumi import Output
 from pulumi import Resource
 from pulumi import ResourceOptions
@@ -20,12 +20,9 @@ from pulumi import export
 from pulumi_aws.acm import Certificate
 from pulumi_aws.acm.outputs import CertificateDomainValidationOption
 from pulumi_aws.iam import GetPolicyDocumentStatementArgs
-from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
 from pulumi_aws.iam import GetPolicyDocumentStatementPrincipalArgs
 from pulumi_aws.iam import get_policy_document
-from pulumi_aws.organizations import get_organization
 from pulumi_aws.s3 import BucketObjectv2
-from pulumi_aws_native import TagArgs
 from pulumi_aws_native import cloudfront
 from pulumi_aws_native import s3
 from pulumi_command.local import Command
@@ -94,83 +91,6 @@ def _upload_assets_to_s3(*, bucket_id: Output[str], base_dir: Path) -> list[Reso
                 )
             )
     return uploads
-
-
-def principal_in_org_condition(org_id: str) -> GetPolicyDocumentStatementConditionArgs:
-    return GetPolicyDocumentStatementConditionArgs(
-        values=[org_id],
-        variable="aws:PrincipalOrgID",
-        test="StringEquals",
-    )
-
-
-def create_worm_bucket(
-    *, resource_name: str, parent: ComponentResource, additional_tags: list[TagArgs] | None = None
-) -> s3.Bucket:
-    if additional_tags is None:
-        additional_tags = []
-    return s3.Bucket(
-        append_resource_suffix(resource_name),
-        versioning_configuration=s3.BucketVersioningConfigurationArgs(
-            status=s3.BucketVersioningConfigurationStatus.ENABLED
-        ),
-        object_lock_enabled=True,
-        object_lock_configuration=s3.BucketObjectLockConfigurationArgs(
-            object_lock_enabled="Enabled",
-            rule=s3.BucketObjectLockRuleArgs(
-                default_retention=s3.BucketDefaultRetentionArgs(mode=s3.BucketDefaultRetentionMode.GOVERNANCE, years=10)
-            ),
-        ),
-        opts=ResourceOptions(parent=parent),
-        tags=[*common_tags_native(), *additional_tags],
-    )
-
-
-class ManualArtifactsBucket(ComponentResource):
-    def __init__(
-        self,
-    ):
-        super().__init__("labauto:ManualArtifactsBucket", append_resource_suffix(), None)
-        # These artifacts are deployed to machines and devices. It's too much of a security risk to let people overwrite them, so setting up WORM.
-        self.bucket = create_worm_bucket(resource_name="manual-artifacts", parent=self)
-        org_id = get_organization().id
-        _ = s3.BucketPolicy(
-            append_resource_suffix("manual-artifacts"),
-            opts=ResourceOptions(parent=self, delete_before_replace=True),
-            bucket=self.bucket.bucket_name,  # type: ignore[reportArgumentType] # pyright somehow thinks a bucket name can be Output[None], which doesn't seem possible
-            policy_document=self.bucket.bucket_name.apply(
-                lambda bucket_name: get_policy_document(
-                    statements=[
-                        GetPolicyDocumentStatementArgs(
-                            effect="Allow",
-                            actions=["s3:PutObject", "s3:GetObject"],
-                            principals=[
-                                GetPolicyDocumentStatementPrincipalArgs(
-                                    type="*",  # TODO: consider locking this down to just people for PutObject
-                                    identifiers=[
-                                        "*"
-                                    ],  # Anyone can do anything with this bucket if they themselves have been granted permission. WORM model keeps files secure.
-                                )
-                            ],
-                            resources=[f"arn:aws:s3:::{bucket_name}/*"],
-                            conditions=[principal_in_org_condition(org_id)],
-                        ),
-                        GetPolicyDocumentStatementArgs(
-                            effect="Allow",
-                            actions=["s3:ListBucket"],
-                            principals=[
-                                GetPolicyDocumentStatementPrincipalArgs(
-                                    type="*",
-                                    identifiers=["*"],
-                                )
-                            ],
-                            resources=[f"arn:aws:s3:::{bucket_name}"],
-                            conditions=[principal_in_org_condition(org_id)],
-                        ),
-                    ]
-                ).json
-            ),
-        )
 
 
 def pulumi_program() -> None:
