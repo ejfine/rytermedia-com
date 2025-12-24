@@ -4,17 +4,17 @@ links:
   - label: "Let's talk"
     color: "neutral"
   - label: 'Email me'
-  - label: View my multimedia sports journalism projects
+  - label: View my sports journalism projects
     size: md
 events:
-  - category: Photography
-    title: "Family Portrait Sessions"
-    description: "Capture candid moments of your family with personalized portrait sessions"
-    url: "/gallery#family-portraits"
   - category: Photography
     title: "Senior Athlete Compendium"
     description: "Celebrate your athletic journey with dynamic senior portraits on and off the field"
     url: "/gallery#senior-athletes"
+  - category: Photography
+    title: "Family Portrait Sessions"
+    description: "Capture candid moments of your family with personalized portrait sessions"
+    url: "/gallery#family-portraits"
   - category: Videography
     title: "Highlight Reels"
     description: "Showcase your athletic prowess with dynamic highlight reels that capture your best moments in action"

@@ -21,8 +21,8 @@ const getCategoryId = (category: Image["category"]) => category.toLowerCase().re
 const groupedImages = computed((): Record<Image["category"], Image[]> => {
   const images = page.value?.images || [];
   const grouped: Record<Image["category"], Image[]> = {
-    "Family Portraits": [],
     "Senior Athletes": [],
+    "Family Portraits": [],
   };
   for (const image of images) {
     if (grouped[image.category]) grouped[image.category].push(image);
