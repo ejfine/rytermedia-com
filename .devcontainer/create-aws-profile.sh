@@ -10,10 +10,10 @@ else
 fi
 
 cat >> ~/.aws/config <<EOF
-[profile development]
+[profile artifacts]
 sso_session = org
 sso_account_id = 609350892236
-sso_role_name = LowRiskAccountAdminAccess
+sso_role_name = ManualArtifactsUploadAccess
 region = us-east-1
 
 [sso-session org]

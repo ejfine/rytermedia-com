@@ -1,7 +1,10 @@
 title: Services
 description: Explore the range of services I offer as a sports multimedia journalist, from dynamic photography sessions to engaging videography projects. Whether you're an athlete looking to showcase your skills or a couple wanting to capture your special day, I have the expertise to bring your vision to life.
 links:
-  - label: View projects I've worked on as a sports multimedia journalist
+  - label: "Let's talk"
+    color: "neutral"
+  - label: 'Email me'
+  - label: View my multimedia sports journalism projects
     size: md
 events:
   - category: Photography

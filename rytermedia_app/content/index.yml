@@ -1,7 +1,7 @@
 seo:
   title: "Ryter Media - Sports Multimedia Journalism"
   description: "I bring sports stories to life. Based in Decatur, GA."
-title: "Hey, I'm Ethan Ryter Multimedia Journalist"
+title: "Hey, I'm Ethan Ryter Multimedia Sports Journalist"
 description: "Welcome to my portfolio! I'm Ethan Ryter, a sports multimedia journalist and photographer based in Decatur, GA. Explore my work capturing the excitement of sports through compelling stories, stunning photography, and engaging videos."
 hero:
   # links:
@@ -13,20 +13,12 @@ hero:
       alt: Random Image 1
     - src: /s3/images/fine-family/EWR08019.jpg
       alt: Random Image 2
-    - src: /s3/hero/random-3.avif
+    - src: /s3/hero/soccer-kids.png
       alt: Random Image 3
-    - src: /s3/hero/random-4.avif
+    - src: /s3/hero/soccer-team.png
       alt: Random Image 4
-    - src: /s3/hero/random-5.avif
+    - src: /s3/hero/basketball-jump.png
       alt: Random Image 5
-    - src: /s3/hero/random-6.avif
-      alt: Random Image 6
-    - src: /s3/hero/random-7.avif
-      alt: Random Image 7
-    - src: /s3/hero/random-8.avif
-      alt: Random Image 8
-    - src: /s3/hero/random-9.avif
-      alt: Random Image 9
 
 about:
   title: About Me
@@ -36,24 +28,31 @@ about:
 experience:
   title: Work Experience
   items:
-    - position: "Senior UX/UI Designer at"
+    - position: "Social Media Assistant at"
       date: "2024 - Present"
       company:
-        name: Linear
-        logo: "i-simple-icons-linear"
-        url: "https://linear.app"
-        color: "#5E6AD2"
-    - position: "Senior UX/UI Designer at"
-      date: "2020 - 2021"
+        name: Overtime
+        #logo: "i-simple-icons-overtime"
+        url: "https://itsovertime.com"
+        color: "#000000"
+    - position: "Leagues Coordinator at"
+      date: "2023 - 2024"
       company:
-        name: Linear
-        url: "https://linear.app"
-        color: "#5E6AD2"
+        name: TOCA Football
+        url: "https://www.tocafootball.com"
+        color: "#031271"
 testimonials:
   - quote: Ethan captured our family beautifully in our photo session. His ability to make everyone feel comfortable resulted in natural, heartfelt photos that we will cherish forever. Highly recommend!
     author:
       name: Laura Fine
       description: Feral House Wife, Smyrna GA
+      avatar:
+        src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80'
+        srcset: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
+  - quote: Ethan did an amazing job capturing our team's spirit and energy. The photos were vibrant and full of life, perfectly reflecting who we are as a team. We couldn't be happier with the results!
+    author:
+      name: Jane Doe
+      description: DecaturFC - Professional Women's Soccer Team
       avatar:
         src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80'
         srcset: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'

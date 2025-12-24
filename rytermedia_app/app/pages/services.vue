@@ -53,7 +53,9 @@ const groupedEvents = computed((): Record<Event["category"], Event[]> => {
       }"
     >
       <template #links>
-        <UButton v-if="page.links" :to="`/projects`" v-bind="page.links[0]" />
+        <UButton :label="page.links[0]?.label" :to="global.meetingLink" v-bind="page.links[0]" />
+        <UButton :to="`mailto:${global.email}`" v-bind="page.links[1]" />
+        <UButton v-if="page.links" :to="`/projects`" v-bind="page.links[2]" />
       </template>
     </UPageHero>
     <UPageSection
