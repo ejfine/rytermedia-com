@@ -13,7 +13,7 @@ hero:
       alt: Random Image 1
     - src: /s3/images/fine-family/EWR08019.jpg
       alt: Random Image 2
-    - src: /s3/hero/soccer-kids.png
+    - src: /s3/hero/soccor-kids.png
       alt: Random Image 3
     - src: /s3/hero/soccer-team.png
       alt: Random Image 4
@@ -34,7 +34,7 @@ experience:
         name: Overtime
         #logo: "i-simple-icons-overtime"
         url: "https://itsovertime.com"
-        color: "#000000"
+        #color: "#000000"
     - position: "Leagues Coordinator at"
       date: "2023 - 2024"
       company:
