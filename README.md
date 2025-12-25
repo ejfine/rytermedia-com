@@ -15,7 +15,7 @@ If you haven't recently authenticated into AWS:
 aws sso login
 ```
 
-or if you are running in a browser-based Github Codespace:
+or if you are running in a browser-based GitHub Codespace:
 
 ```bash
 aws sso login --use-device-code
@@ -27,7 +27,7 @@ Then:
 aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/public/s3 ./rytermedia_app/public/s3
 ```
 
-## Start the webserver:
+## Start the webserver
 
 ```bash
 pnpm --dir=rytermedia_app dev
