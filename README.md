@@ -9,9 +9,25 @@
 # Development
 
 ## Download files from S3 locally
+If you haven't recently authenticated into AWS:
+```bash
+aws sso login
+```
+
+or if you are running in a browser-based Github Codespace:
+```bash
+aws sso login --use-device-code
+```
+
+Then:
+
 ```bash
 aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/public/s3 ./rytermedia_app/public/s3
 ```
+
+## Start the webserver:
+```bash
+pnpm --dir=rytermedia_app dev
 
 ## Infrastructure Deployments
 Run a Pulumi Preview: `uv --directory=./infrastructure run python -m infrastructure.pulumi_deploy --stack=dev`
