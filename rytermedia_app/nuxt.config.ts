@@ -5,6 +5,17 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  app: {
+    head: {
+      script: [
+        {
+          // Runs before Nuxt loads. Forces a sane route for file://.
+          children:
+            "if (location.protocol === 'file:' && (!location.hash || location.hash === '#')) { location.replace(location.href + '#/'); }",
+        },
+      ],
+    },
+  },
   ssr: false, // Ensure client-side only rendering for single HTML
 
   // router: {

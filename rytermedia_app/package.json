@@ -10,7 +10,7 @@
     "comment-about-dev-no-fork": "sometimes it seems needed, other times it seems to work with it...more info https://github.com/nuxt/cli/issues/181",
     "dev": "nuxt dev --no-fork",
     "generate": "nuxt generate",
-    "generate-offline": "NUXT_APP_BASE_URL=./ NUXT_OFFLINE_SINGLE_HTML=1 nuxt generate && ",
+    "generate-offline": "NUXT_OFFLINE_SINGLE_HTML=1 nuxt generate && python ./inline_content.py",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && pnpm exec playwright-core install --only-shell chromium-headless-shell",
     "test-unit": "vitest --exclude=\"tests/e2e/**\" --exclude=\"tests/compiled/**\" --run --coverage",
