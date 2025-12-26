@@ -50,6 +50,12 @@ const [{ data: navigation }, { data: files }] = await Promise.all([
       <UContainer>
         <UPage>
           <UError :error="error" />
+          <!-- Add debug information -->
+          <div v-if="error" class="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+            <p><strong>Requested URL:</strong> {{ error.url || "N/A" }}</p>
+            <p><strong>Status Code:</strong> {{ error.statusCode }}</p>
+            <p><strong>Message:</strong> {{ error.message }}</p>
+          </div>
         </UPage>
       </UContainer>
     </UMain>

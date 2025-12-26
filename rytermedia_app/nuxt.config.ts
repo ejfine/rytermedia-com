@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  ssr: false, // Ensure client-side only rendering for single HTML
+
+  // router: {
+  //   options: {
+  //     hashMode: true, // Use hash-based routing for file:// protocol
+  //   },
+  // },
   devtools: { enabled: process.env.NODE_ENV !== "test" },
   telemetry: process.env.NODE_ENV !== "test",
   // the conditional modules added in by the template make it complicated to format consistently...at least with only 3 'always included' modules
@@ -40,6 +47,6 @@ export default defineNuxtConfig({
   singleHtml: {
     enabled: process.env.NUXT_OFFLINE_SINGLE_HTML === "1",
     deleteInlinedFiles: false,
-    output: "offline.html",
+    output: "index.html",
   },
 });

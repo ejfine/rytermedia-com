@@ -19,6 +19,8 @@
     "test-compiled:watch": "vitest --exclude=\"tests/e2e/**\" --exclude=\"tests/unit/**\" --test-timeout=15000"
   },
   "dependencies": {
+    "@fontsource/instrument-serif": "^5.2.8",
+    "@fontsource/public-sans": "^5.2.7",
     "@iconify-json/lucide": "^1.2.71",
     "@iconify-json/simple-icons": "^1.2.60",
     "@iconify/vue": "^5.0.0",
