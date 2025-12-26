@@ -5,6 +5,53 @@ import json
 import os
 import re
 from pathlib import Path
+import html as html_lib
+import re
+from pathlib import Path
+
+_SCRIPT_CHILDREN_RE = re.compile(
+    r'<script(?P<before>[^>]*)\schildren="(?P<js>[^"]*)"(?:\s(?P<after>[^>]*))?>\s*</script>',
+    flags=re.IGNORECASE,
+)
+
+
+def fix_script_children_attributes(doc: str) -> str:
+    """
+    Convert:
+      <script children="console.log(1)"></script>
+    Into:
+      <script>console.log(1)</script>
+
+    This is required because some build steps can serialize unhead "children"
+    as an HTML attribute instead of script contents.
+    """
+
+    def repl(m: re.Match[str]) -> str:
+        before = (m.group("before") or "").strip()
+        after = (m.group("after") or "").strip()
+
+        # HTML-unescape so things like &quot; become real quotes.
+        js = html_lib.unescape(m.group("js") or "")
+
+        # Preserve any other attributes, but drop the bogus children="...".
+        attrs = " ".join(x for x in [before, after] if x).strip()
+        attrs = (" " + attrs) if attrs else ""
+
+        return f"<script{attrs}>{js}</script>"
+
+    return _SCRIPT_CHILDREN_RE.sub(repl, doc)
+
+
+def patch_html_file(path: Path) -> None:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    text2 = fix_script_children_attributes(text)
+    if text2 != text:
+        path.write_text(text2, encoding="utf-8")
+
+
+def patch_all_html(root: Path) -> None:
+    for html_path in root.rglob("*.html"):
+        patch_html_file(html_path)
 
 
 def _read_text(path: Path) -> str:
@@ -163,6 +210,7 @@ def main() -> int:
             p.unlink(missing_ok=True)
 
     print(f"Embedded {len(dumps)} sql_dump.txt files into {bootstrap_path}")
+    patch_all_html(public_dir)
     return 0
 
 

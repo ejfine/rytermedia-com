@@ -11,7 +11,7 @@ export default defineNuxtConfig({
         {
           // Runs before Nuxt loads. Forces a sane route for file://.
           children:
-            "if (location.protocol === 'file:' && (!location.hash || location.hash === '#')) { location.replace(location.href + '#/'); }",
+            "(function(){if(location.protocol!=='file:')return; if(!location.hash||location.hash==='#'){location.replace(location.href.replace(/#.*$/,'')+'#/');}})();",
         },
       ],
     },
@@ -28,6 +28,7 @@ export default defineNuxtConfig({
   // the conditional modules added in by the template make it complicated to format consistently...at least with only 3 'always included' modules
   // prettier-ignore
   modules: [
+    //...(process.env.NUXT_OFFLINE_SINGLE_HTML === "1" ? [] : ['@nuxt/image']),
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/content',
