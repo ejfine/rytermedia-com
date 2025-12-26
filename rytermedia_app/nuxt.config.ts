@@ -27,7 +27,15 @@ export default defineNuxtConfig({
     ["@nuxt/eslint", { devOnly: true }],
     ["@nuxt/test-utils/module", { devOnly: true }],
   ],
-  css: ["~/assets/css/main.css"],
+  css: [
+    "~/assets/css/main.css",
+    "@fontsource/public-sans/400.css",
+    "@fontsource/public-sans/500.css",
+    "@fontsource/public-sans/600.css",
+    "@fontsource/public-sans/700.css",
+    "@fontsource/instrument-serif/400.css",
+    "@fontsource/instrument-serif/400-italic.css",
+  ],
   experimental: { appManifest: false }, // https://github.com/nuxt/nuxt/issues/30461#issuecomment-2572616714
   nitro: {
     prerender: {

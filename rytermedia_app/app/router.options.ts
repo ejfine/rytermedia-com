@@ -1,15 +1,17 @@
-// app/router.options.ts
 import type { RouterConfig } from "@nuxt/schema";
-import { createMemoryHistory } from "vue-router";
-
-const offline = process.env.NUXT_OFFLINE_SINGLE_HTML === "1";
+import { createMemoryHistory, createWebHistory } from "vue-router";
 
 export default {
   history: (base) => {
-    // Keep normal behavior for your real deployed site.
-    if (!offline) return null;
+    console.log("router.options.ts is being used");
+    console.log("Protocol:", import.meta.client ? window.location.protocol : "SSR");
 
-    // When building the single-file version, ignore the URL path entirely.
-    return import.meta.client ? createMemoryHistory(base) : null;
+    if (import.meta.client && window.location.protocol === "file:") {
+      console.log("Using memory history for file:// protocol");
+      return createMemoryHistory(base);
+    }
+
+    console.log("Using web history");
+    return createWebHistory(base);
   },
 } satisfies RouterConfig;
