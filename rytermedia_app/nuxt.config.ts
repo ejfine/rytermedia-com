@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/content',
     '@vueuse/nuxt',
+    ...(process.env.NUXT_OFFLINE_SINGLE_HTML === "1" ? ["nuxt-single-html"] : []),
     ...(process.env.NODE_ENV === 'production' ? ['nuxt-og-image'] : []),
     'motion-v/nuxt',
     ["@nuxt/eslint", { devOnly: true }],
@@ -35,5 +36,10 @@ export default defineNuxtConfig({
         usePolling: true, // this seems to be explicitly needed when in a devcontainer in order for hot reloading to work
       },
     },
+  },
+  singleHtml: {
+    enabled: process.env.NUXT_OFFLINE_SINGLE_HTML === "1",
+    deleteInlinedFiles: false,
+    output: "offline.html",
   },
 });

@@ -31,7 +31,7 @@
     "@vueuse/nuxt": "^13.9.0",
     "better-sqlite3": "^12.4.6",
     "motion-v": "^1.7.3",
-    "nuxt": "^4.2.0",
+    "nuxt": "^4.2.2",
     "nuxt-og-image": "^5.1.12",
     "vue": "^3.5.25",
     "vue-router": "^4.6.0"
@@ -54,6 +54,7 @@
     "eslint": "~9.38.0",
     "eslint-plugin-vitest": "^0.5.4",
     "happy-dom": "^20.0.2",
+    "nuxt-single-html": "^0.2.0",
     "parse5": "^8.0.0",
     "playwright": "^1.57.0",
     "playwright-core": "^1.57.0",
