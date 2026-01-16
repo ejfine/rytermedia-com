@@ -2,7 +2,7 @@
 type Image = {
   alt: string;
   src: string;
-  category: "Family Portraits" | "Senior Athletes";
+  category: "Family Portraits" | "Senior Athletes" | "Game Action";
 };
 
 const { data: page } = await useAsyncData("gallery", () => {
@@ -22,6 +22,7 @@ const groupedImages = computed((): Record<Image["category"], Image[]> => {
   const images = page.value?.images || [];
   const grouped: Record<Image["category"], Image[]> = {
     "Senior Athletes": [],
+    "Game Action": [],
     "Family Portraits": [],
   };
   for (const image of images) {

@@ -3,14 +3,14 @@ description: Learn more about my journey as a Georgia-based sports journalist, m
 # content: |
 #   Stuff
 images:
+  - alt: Liverpool match
+    src: /s3/images/liverpool.png
+    category: Game Action
+
   - alt: Family portrait session
     src: /s3/images/fine-family/EWR08158.jpg
     category: Family Portraits
 
-  - alt: Liverpool match
-    src: /s3/images/liverpool.png
-    category: Family Portraits
-
-  - alt: Fastest kid east of the Mississippi
-    src: /s3/images/fine-family/EWR08019.jpg
+  - alt: Aiden Hovatter
+    src: /s3/images/DHS-Soccer/19-with-skyline-in-back.jpg
     category: Senior Athletes
