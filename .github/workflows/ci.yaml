@@ -120,6 +120,7 @@ jobs:
       statuses: write # needed for updating status on Dependabot PRs
     needs:
       - get-values
+      - lint
       - build-app-frontend
       - pulumi-prod
       - check-skip-duplicate
@@ -130,6 +131,7 @@ jobs:
           success_pattern="^(skipped|success)$" # these are the possibilities: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#needs-context
 
           if [[ ! "${{ needs.get-values.result }}" =~ $success_pattern ]] ||
+            [[ ! "${{ needs.lint.result }}" =~ $success_pattern ]] ||
             [[ ! "${{ needs.build-app-frontend.result }}" =~ $success_pattern ]] ||
             [[ ! "${{ needs.pulumi-prod.result }}" =~ $success_pattern ]]; then
             echo "❌ One or more jobs did not finish with skipped or success"
