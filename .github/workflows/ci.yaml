@@ -39,12 +39,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Install latest versions of node packages
         uses: ./.github/actions/install_deps
         with:
-          node-version: 24.11.1
+          node-version: 24.7.0
           skip-installing-ssm-plugin-manager: true
 
       - name: AWS OIDC
@@ -57,11 +57,12 @@ jobs:
         run: |
           aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/public/s3 ./rytermedia_app/public/s3
 
+
       - name: Build frontend
         run: pnpm --dir=rytermedia_app generate
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: app-frontend-static-assets
           path: rytermedia_app/.output/public/**/*
@@ -103,12 +104,16 @@ jobs:
     if: always()
     steps:
       - name: fail if prior job failure
-        if: >-
-          needs.get-values.result != 'success' ||
-          needs.build-app-frontend.result != 'success' ||
-          (needs.pulumi-prod.result != 'success' && needs.pulumi-prod.result != 'skipped')
         run: |
-          exit 1
+          success_pattern="^(skipped|success)$" # these are the possibilities: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#needs-context
+
+          if [[ ! "${{ needs.get-values.result }}" =~ $success_pattern ]] ||
+            [[ ! "${{ needs.build-app-frontend.result }}" =~ $success_pattern ]] ||
+            [[ ! "${{ needs.pulumi-prod.result }}" =~ $success_pattern ]]; then
+            echo "❌ One or more jobs did not finish with skipped or success"
+            exit 1
+          fi
+          echo "✅ All jobs finished with skipped or success"
       - name: Mark updated Dependabot commit of devcontainer hash as succeeded
         if: needs.get-values.outputs.dependabot-commit-created == 'true'
         env:
