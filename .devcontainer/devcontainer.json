@@ -12,7 +12,7 @@
     "ghcr.io/devcontainers/features/aws-cli:1.1.2": {
       // https://github.com/devcontainers/features/blob/main/src/aws-cli/devcontainer-feature.json
       // view latest version https://raw.githubusercontent.com/aws/aws-cli/v2/CHANGELOG.rst
-      "version": "2.32.6",
+      "version": "2.32.6"
     },
     "ghcr.io/devcontainers/features/python:1.8.0": {
       // https://github.com/devcontainers/features/blob/main/src/python/devcontainer-feature.json
@@ -23,8 +23,10 @@
     "ghcr.io/devcontainers/features/node:1.7.1": {
       // https://github.com/devcontainers/features/blob/main/src/node/devcontainer-feature.json
       "version": "24.7.0",
-      "pnpmVersion": "10.30.0"
-    }
+      "pnpmVersion": "10.32.1"
+    },
+    // https://github.com/anthropics/devcontainer-features/blob/main/src/claude-code/devcontainer-feature.json
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0.5": {}
   },
   "customizations": {
     "vscode": {
@@ -33,11 +35,12 @@
         "-AmazonWebServices.aws-toolkit-vscode", // the AWS CLI feature installs this automatically, but it's causing problems in VS Code
         // basic tooling
         // "eamodio.gitlens@15.5.1",
-        "coderabbit.coderabbit-vscode@0.17.0",
+        "coderabbit.coderabbit-vscode@0.18.3",
         "ms-vscode.live-server@0.5.2025051301",
         "MS-vsliveshare.vsliveshare@1.0.5905",
         "github.copilot@1.388.0",
-        "github.copilot-chat@0.38.2026022001",
+        "github.copilot-chat@0.38.2026022704",
+        "anthropic.claude-code@2.1.74",
 
         // Python
         "ms-python.python@2026.2.2026021801",
@@ -46,7 +49,7 @@
         "charliermarsh.ruff@2026.36.0",
 
         // VueJS
-        "vue.volar@3.2.1",
+        "vue.volar@3.2.5",
         "vitest.explorer@1.36.0",
 
         // All javascript
@@ -82,5 +85,5 @@
   "initializeCommand": "sh .devcontainer/initialize-command.sh",
   "onCreateCommand": "sh .devcontainer/on-create-command.sh",
   "postStartCommand": "sh .devcontainer/post-start-command.sh"
-  // Devcontainer context hash (do not manually edit this, it's managed by a pre-commit hook): ffb8039f # spellchecker:disable-line
+  // Devcontainer context hash (do not manually edit this, it's managed by a pre-commit hook): 310b6f7f # spellchecker:disable-line
 }

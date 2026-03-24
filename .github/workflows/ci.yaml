@@ -81,7 +81,7 @@ jobs:
         run: pnpm --dir=rytermedia_app generate
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: app-frontend-static-assets
           path: rytermedia_app/.output/public/**/*
