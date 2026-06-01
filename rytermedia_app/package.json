@@ -2,7 +2,7 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.4.0",
+  "packageManager": "pnpm@11.5.0",
   "scripts": {
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --fix --ext .vue,.ts,.js",
@@ -64,7 +64,7 @@
     "remark-mdc": "^3.9.0",
     "remark-rehype": "^11.1.2",
     "tailwindcss": "^4.2.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
     "vitest": "^4.1.7",

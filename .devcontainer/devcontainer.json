@@ -28,7 +28,7 @@
     "ghcr.io/devcontainers/features/node:2.0.0": {
       // https://github.com/devcontainers/features/blob/main/src/node/devcontainer-feature.json
       "version": "24.7.0",
-      "pnpmVersion": "11.4.0",
+      "pnpmVersion": "11.5.0",
       "nvmVersion": "0.40.4",
     },
     // https://github.com/anthropics/devcontainer-features/blob/main/src/claude-code/devcontainer-feature.json
@@ -91,5 +91,5 @@
   "initializeCommand": "sh .devcontainer/initialize-command.sh",
   "onCreateCommand": "sh .devcontainer/on-create-command.sh",
   "postStartCommand": "sh .devcontainer/post-start-command.sh"
-  // Devcontainer context hash (do not manually edit this, it's managed by a pre-commit hook): d5d3abe5 # spellchecker:disable-line
+  // Devcontainer context hash (do not manually edit this, it's managed by a pre-commit hook): 320ce736 # spellchecker:disable-line
 }

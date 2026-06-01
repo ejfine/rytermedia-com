@@ -26,7 +26,31 @@ const groupedImages = computed((): Record<Image["category"], Image[]> => {
     "Family Portraits": [],
   };
   for (const image of images) {
-    if (grouped[image.category]) grouped[image.category].push(image);
+    switch (image.category) {
+      case "Senior Athletes":
+        grouped["Senior Athletes"].push({
+          alt: image.alt,
+          src: image.src,
+          category: "Senior Athletes",
+        });
+        break;
+      case "Game Action":
+        grouped["Game Action"].push({
+          alt: image.alt,
+          src: image.src,
+          category: "Game Action",
+        });
+        break;
+      case "Family Portraits":
+        grouped["Family Portraits"].push({
+          alt: image.alt,
+          src: image.src,
+          category: "Family Portraits",
+        });
+        break;
+      default:
+        break;
+    }
   }
   return grouped;
 });
