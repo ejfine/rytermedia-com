@@ -88,13 +88,7 @@ const groupedEvents = computed((): Record<Event["category"], Event[]> => {
             <div class="mb-1 text-sm font-medium text-muted">
               <span>{{ event.description }}</span>
             </div>
-            <UButton
-              v-if="event.url"
-              target="_blank"
-              :label="event.category === 'Podcast' ? 'Listen' : 'View'"
-              variant="link"
-              class="p-0 pt-2 gap-0"
-            >
+            <UButton v-if="event.url" target="_blank" label="View" variant="link" class="p-0 pt-2 gap-0">
               <template #trailing>
                 <UIcon
                   name="i-lucide-arrow-right"

@@ -14,7 +14,7 @@ services:
       # Break out the pnpm store folder as a separate docker volume for better performance on Windows hosts
       - pnpm_store:/workspaces/rytermedia-com/.pnpm-store
       # And node_modules
-      - app_node_modules:/workspaces/rytermedia-com/rytermedia_app/node_modules
+      - node_modules:/workspaces/rytermedia-com/node_modules
     command: sleep infinity
     ports:
       - "49932:2222"
@@ -43,4 +43,4 @@ volumes:
   beads_dolt_data: {}
   python_infrastructure_venv: {}
   pnpm_store: {}
-  app_node_modules: {}
+  node_modules: {}

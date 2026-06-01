@@ -8,6 +8,7 @@
 
 # Development
 
+
 ## Download files from S3 locally
 If you haven't recently authenticated into AWS:
 
@@ -33,8 +34,13 @@ aws s3 sync s3://manual-artifacts--rytermedia-com--prod-adf4c0c/rytermedia_app/p
 pnpm --dir=rytermedia_app dev
 ```
 
+## Frontend
+- To start a local development server (accessible at localhost:3000): `pnpm --dir=rytermedia_app dev`
+- To generate the production build to prepare for deployment to the cloud: `pnpm --dir=rytermedia_app generate`
+
 ## Infrastructure Deployments
 Run a Pulumi Preview: `uv --directory=./infrastructure run python -m infrastructure.pulumi_deploy --stack=dev`
+Deploy the dev stack: `uv --directory=./infrastructure run python -m infrastructure.pulumi_deploy --stack=dev --up`
 
 
 ## Updating from the template

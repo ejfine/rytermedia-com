@@ -10,19 +10,19 @@ dependencies = [
     # Specific to this project
 
     # Managed by upstream template
-    "pyright>=1.1.408",
-    "ty>=0.0.23",
-    "pytest>=9.0.2",
+    "pyright>=1.1.409",
+    "ty>=0.0.40",
+    "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
-    "pytest-randomly>=4.0.1",
-    "pulumi>=3.226.0",
-    "pulumi-aws>=7.23.0",
-    "pulumi-aws-native>=1.57.0",
+    "pytest-randomly>=4.1.0",
+    "pulumi>=3.234.0",
+    "pulumi-aws>=7.28.0",
+    "pulumi-aws-native>=1.63.0",
     "pulumi-command>=1.2.1",
     "ephemeral-pulumi-deploy>=0.0.6",
-    "lab-auto-pulumi>=0.1.18",
-    "boto3>=1.42.53",
-    "boto3-stubs[all]>=1.42.53",
+    "lab-auto-pulumi>=0.2.0",
+    "boto3>=1.42.92",
+    "boto3-stubs[all]>=1.42.92",
 ]
 
 [tool.uv]
