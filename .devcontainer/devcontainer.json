@@ -25,7 +25,7 @@
       "installTools": false,
       "optimize": true
     },
-    "ghcr.io/devcontainers/features/node:2.0.0": {
+    "ghcr.io/devcontainers/features/node:2.1.0": {
       // https://github.com/devcontainers/features/blob/main/src/node/devcontainer-feature.json
       "version": "24.7.0",
       "pnpmVersion": "11.5.0",
